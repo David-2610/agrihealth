@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# Soil Report Generation System
 
-## Project info
+## Overview
+This project is designed to generate soil reports based on the provided soil type. It allows users to input soil characteristics and receive a comprehensive analysis. Additionally, the system maintains a record of all previously generated soil reports for easy access and reference.
 
-**URL**: https://lovable.dev/projects/0c029672-9eba-47f8-b915-12adda5907c8
+## Features
+- Input soil type and receive a detailed report.
+- Store and manage generated reports.
+- User-friendly interface for easy navigation.
+- Secure and efficient data management.
+- User authentication via Supabase.
 
-## How can I edit this code?
+## Installation
+1. Clone the repository:
+   ```sh
+   git clone <your-repository-url>
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd soil-report-system
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Set up environment variables for Supabase:
+   ```sh
+   REACT_APP_SUPABASE_URL=<your-supabase-url>
+   REACT_APP_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+   ```
+5. Run the application:
+   ```sh
+   npm start
+   ```
 
-There are several ways of editing your application.
+## Usage
+1. Open the application in your browser.
+2. Sign up or log in using Supabase authentication.
+3. Enter the required soil data.
+4. Generate and review the soil report.
+5. Access previously stored reports from the records section.
 
-**Use Lovable**
+## Technologies Used
+- Frontend: React (TypeScript)
+- Authentication: Supabase
+- Database: Supabase (PostgreSQL)
+- Backend (if applicable): Supabase Edge Functions
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0c029672-9eba-47f8-b915-12adda5907c8) and start prompting.
+## Contributing
+Feel free to contribute by submitting issues or pull requests.
 
-Changes made via Lovable will be committed automatically to this repo.
+## License
+This project is licensed under the MIT License.
 
-**Use your preferred IDE**
+---
+Feel free to modify this README to better suit your project structure and technology stack.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/0c029672-9eba-47f8-b915-12adda5907c8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
