@@ -1,9 +1,20 @@
+
 import * as React from "react"
 
 import type {
   ToastActionElement,
   ToastProps,
 } from "@/components/ui/toast"
+
+// Export the ToastAPI interface for components to use
+export interface ToastAPI {
+  (props: {
+    title?: React.ReactNode;
+    description?: React.ReactNode;
+    action?: ToastActionElement;
+    variant?: "default" | "destructive";
+  }): void;
+}
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
