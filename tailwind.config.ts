@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom AgriHealth colors
+				agrihealth: {
+					green: {
+						DEFAULT: '#2D6A4F',
+						light: '#74C69D',
+					},
+					brown: '#8B4513',
+					cream: '#F5F5DC',
 				}
 			},
 			borderRadius: {
