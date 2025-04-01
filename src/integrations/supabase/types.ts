@@ -30,6 +30,36 @@ export type Database = {
         }
         Relationships: []
       }
+      soil_reports: {
+        Row: {
+          additional_info: string | null
+          created_at: string
+          id: string
+          location: string | null
+          report_content: string
+          soil_type: string
+          user_id: string
+        }
+        Insert: {
+          additional_info?: string | null
+          created_at?: string
+          id?: string
+          location?: string | null
+          report_content: string
+          soil_type: string
+          user_id: string
+        }
+        Update: {
+          additional_info?: string | null
+          created_at?: string
+          id?: string
+          location?: string | null
+          report_content?: string
+          soil_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

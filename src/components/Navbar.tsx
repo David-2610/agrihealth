@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, FileText } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   DropdownMenu,
@@ -85,6 +85,10 @@ const Navbar = () => {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/account")}>
+                  <FileText className="mr-2 h-4 w-4" /> My Soil Reports
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="text-red-500">
                   <LogOut className="mr-2 h-4 w-4" /> Sign out
                 </DropdownMenuItem>
@@ -127,13 +131,25 @@ const Navbar = () => {
             ))}
             
             {user ? (
-              <Button 
-                variant="outline" 
-                className="bg-white text-agrihealth-green hover:bg-agrihealth-cream"
-                onClick={handleSignOut}
-              >
-                <LogOut className="mr-2 h-4 w-4" /> Sign out
-              </Button>
+              <>
+                <Link 
+                  to="/account" 
+                  className="text-white hover:text-agrihealth-cream transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  My Soil Reports
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="bg-white text-agrihealth-green hover:bg-agrihealth-cream"
+                  onClick={() => {
+                    handleSignOut();
+                    setIsOpen(false);
+                  }}
+                >
+                  <LogOut className="mr-2 h-4 w-4" /> Sign out
+                </Button>
+              </>
             ) : (
               <Link to="/login" onClick={() => setIsOpen(false)}>
                 <Button className="w-full bg-white text-agrihealth-green hover:bg-agrihealth-cream">
