@@ -1,12 +1,25 @@
 
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -16,6 +29,23 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account.",
+      });
+      navigate("/");
+    } catch (error) {
+      toast({
+        title: "Error signing out",
+        description: "An error occurred while signing out.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -43,11 +73,30 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link to="/login">
-            <Button className="bg-white text-agrihealth-green hover:bg-agrihealth-cream">
-              Login
-            </Button>
-          </Link>
+          
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white text-agrihealth-green hover:bg-agrihealth-cream">
+                  <User className="mr-2 h-4 w-4" />
+                  {user.email?.split('@')[0] || "Account"}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="text-red-500">
+                  <LogOut className="mr-2 h-4 w-4" /> Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/login">
+              <Button className="bg-white text-agrihealth-green hover:bg-agrihealth-cream">
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -76,11 +125,22 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link to="/login" onClick={() => setIsOpen(false)}>
-              <Button className="w-full bg-white text-agrihealth-green hover:bg-agrihealth-cream">
-                Login
+            
+            {user ? (
+              <Button 
+                variant="outline" 
+                className="bg-white text-agrihealth-green hover:bg-agrihealth-cream"
+                onClick={handleSignOut}
+              >
+                <LogOut className="mr-2 h-4 w-4" /> Sign out
               </Button>
-            </Link>
+            ) : (
+              <Link to="/login" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-white text-agrihealth-green hover:bg-agrihealth-cream">
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}

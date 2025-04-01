@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +17,19 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate('/');
+      }
+    };
+    
+    checkAuth();
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,20 +46,24 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // This is a simulation of authentication API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) throw error;
       
       toast({
         title: "Success",
         description: "You have successfully logged in.",
       });
       
-      // In a real app, you would redirect or update state here
+      navigate('/');
       
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Authentication failed",
-        description: "Invalid email or password. Please try again.",
+        description: error.message || "Invalid email or password. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -67,20 +86,27 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // This is a simulation of registration API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+      
+      if (error) throw error;
       
       toast({
         title: "Account created",
-        description: "Your account has been successfully created.",
+        description: "Your account has been successfully created. Check your email for confirmation.",
       });
       
-      // In a real app, you would redirect or update state here
-      
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Registration failed",
-        description: "Unable to create account. Please try again.",
+        description: error.message || "Unable to create account. Please try again.",
         variant: "destructive",
       });
     } finally {
